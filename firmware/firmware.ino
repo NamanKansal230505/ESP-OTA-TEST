@@ -9,11 +9,11 @@
 
 #include <OTAForever.h>
 
-const int LED_PIN = 2;  // change for your board
+const int LED_PIN = 2;               // change for your board
+const uint32_t BREATH_MS = 3000;     // one full fade in + fade out
 
 void setup() {
   Serial.begin(115200);
-  pinMode(LED_PIN, OUTPUT);
 
   if (OTAForever.connectWiFi()) {
     Serial.printf("WiFi connected. Running build #%lu from %s\n",
@@ -23,6 +23,10 @@ void setup() {
 }
 
 void loop() {
-  digitalWrite(LED_PIN, !digitalRead(LED_PIN));
-  delay(100);  // fast blink = build #2 arrived over the air
+  // Smooth "breathing" fade: brightness follows a cosine wave (0 -> 1 -> 0).
+  // Squaring it makes the fade look even to the eye (LEDs look too bright at low PWM).
+  float phase = (millis() % BREATH_MS) / (float)BREATH_MS * TWO_PI;
+  float level = (1.0f - cosf(phase)) / 2.0f;
+  analogWrite(LED_PIN, (int)(level * level * 255));
+  delay(10);
 }

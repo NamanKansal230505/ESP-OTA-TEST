@@ -5,7 +5,7 @@
 sketch: firmware
 
 # Shown in device logs. Devices decide what's newer by build number, not by this.
-version: "1.0.1"
+version: "1.1.0"
 
 # Boards to build for. "chip" must be one of: esp32, esp32s2, esp32s3, esp32c3, esp32c6
 # "fqbn" is the Arduino board ID (Arduino IDE: Tools > Board; or `arduino-cli board listall`).
