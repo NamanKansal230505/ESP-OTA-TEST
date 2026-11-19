@@ -1,0 +1,30 @@
+# OTA-Forever project settings.
+# Push to GitHub and every device linked to this repo + branch updates itself.
+
+# Folder that contains your sketch (<folder>/<folder>.ino)
+sketch: firmware
+
+# Shown in device logs. Devices decide what's newer by build number, not by this.
+version: "1.0.0"
+
+# Boards to build for. "chip" must be one of: esp32, esp32s2, esp32s3, esp32c3, esp32c6
+# "fqbn" is the Arduino board ID (Arduino IDE: Tools > Board; or `arduino-cli board listall`).
+boards:
+  - chip: esp32
+    fqbn: esp32:esp32:esp32
+  # - chip: esp32s3
+  #   fqbn: esp32:esp32:esp32s3
+  # - chip: esp32c3
+  #   fqbn: esp32:esp32:esp32c3
+  #   build_properties:            # optional extra arduino-cli --build-property values
+  #     - build.extra_flags=-DMY_FLAG=1
+
+# Arduino-ESP32 core version (empty = latest)
+core_version: ""
+
+# Libraries from the Arduino Library Manager, e.g. "ArduinoJson" or "ArduinoJson@7.2.1"
+libraries: []
+
+# Branches that publish updates. Each branch is its own channel: a device set to
+# branch "dev" only installs builds pushed to "dev". "*" = every branch.
+branches: ["*"]
