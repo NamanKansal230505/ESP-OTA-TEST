@@ -39,6 +39,7 @@ class OTAForeverClass {
   bool _loaded = false;
   String _ssid, _pass, _repo, _channel;
   uint32_t _build = 0;
+  uint32_t _failedBuild = 0;
   uint32_t _intervalMs = 10 * 60 * 1000UL;
   TaskHandle_t _task = nullptr;
 };

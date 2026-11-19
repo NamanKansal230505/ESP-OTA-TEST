@@ -62,9 +62,11 @@ bool OTAForeverClass::load() {
   _repo = readStr(h, "repo");
   _channel = readStr(h, "channel");
   if (_channel.length() == 0) _channel = "main";
-  uint32_t b = 0;
+  uint32_t b = 0, failed = 0;
   nvs_get_u32(h, "build", &b);
+  nvs_get_u32(h, "failed", &failed);
   _build = b;
+  _failedBuild = failed;
   nvs_close(h);
   _loaded = _repo.length() > 0;
   return _loaded;
@@ -98,6 +100,11 @@ bool OTAForeverClass::updateAvailable() {
   if (code != 200) return false;
 
   long build = jsonInt(body, "build");
+  if (build > 0 && (uint32_t)build == _failedBuild) {
+    // The loader just failed to install this build (e.g. bad connection).
+    // Don't loop; it retries on the next reset, or when a newer build appears.
+    return false;
+  }
   return build > (long)_build && jsonHasKey(body, CONFIG_IDF_TARGET);
 }
 
