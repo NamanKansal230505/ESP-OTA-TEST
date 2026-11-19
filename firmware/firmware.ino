@@ -24,5 +24,5 @@ void setup() {
 
 void loop() {
   digitalWrite(LED_PIN, !digitalRead(LED_PIN));
-  delay(500);
+  delay(100);  // fast blink = build #2 arrived over the air
 }
